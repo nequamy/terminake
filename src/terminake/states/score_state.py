@@ -90,9 +90,9 @@ class ScoreState(BaseState):
     ]
 
     _hint_art: list = [
-        "░█▀█░█▀▄░█▀▀░█▀▀░█▀▀░░░▄▀▄░░░█▀█░█▀▄░░░▄▀▄░░░█▀▀░█▀█░█▀▄░░░█▄█░█▀▀░█▀█░█░█",
-        "░█▀▀░█▀▄░█▀▀░▀▀█░▀▀█░░░█\█░░░█░█░█▀▄░░░█\█░░░█▀▀░█░█░█▀▄░░░█░█░█▀▀░█░█░█░█",
-        "░▀░░░▀░▀░▀▀▀░▀▀▀░▀▀▀░░░░▀\░░░▀▀▀░▀░▀░░░░▀\░░░▀░░░▀▀▀░▀░▀░░░▀░▀░▀▀▀░▀░▀░▀▀▀",
+        "░█▀█░█▀▄░█▀▀░█▀▀░█▀▀░░░▄▀▄░░░█▀▀░█▀█░█▀▄░░░█▄█░█▀▀░█▀█░█░█",
+        "░█▀▀░█▀▄░█▀▀░▀▀█░▀▀█░░░█\█░░░█▀▀░█░█░█▀▄░░░█░█░█▀▀░█░█░█░█",
+        "░▀░░░▀░▀░▀▀▀░▀▀▀░▀▀▀░░░░▀\░░░▀░░░▀▀▀░▀░▀░░░▀░▀░▀▀▀░▀░▀░▀▀▀",
     ]
 
     def handle_input(self, key: int):
@@ -123,7 +123,7 @@ class ScoreState(BaseState):
             for line_idx, line in enumerate(num):
                 window.addstr(pos_y + line_idx, pos_x, line, curses.A_BOLD)
 
-        pos_y += 10
+        pos_y = max_y - len(num)
         pos_x = (max_x - len(self._hint_art[0])) // 2
         for i in range(len(self._hint_art)):
             window.addstr(pos_y + i, pos_x, self._hint_art[i], curses.A_BOLD)
