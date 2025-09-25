@@ -65,7 +65,7 @@ class Snake:
             self.grow = 0
         else:
             self.pos.pop()
-            if self.grow <= 0:
+            if self.grow < 0:
                 self.pos.pop()
                 self.grow = 0
 
