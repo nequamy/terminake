@@ -1,5 +1,6 @@
 import curses
 import time
+from turtle import speed
 from typing import List, Tuple
 
 from entities.food import BaseFood
@@ -18,14 +19,20 @@ class Snake:
 
         self.pos = [(x, y - i) for i in range(self._length)]
         self.grow = 0
+        self._coffee_speed_up = 1
 
-        self._base_speed = 0.1
+        self._base_speed = 0.2
         self._speed_up_coef = 0.95
         self._prev_time = time.time()
 
     def eat(self, food: BaseFood) -> None:
         self._length += food.value
         self.grow += food.value
+
+        if hasattr(food, "speed_up"):
+            self._speed_up_coef = food.speed_up
+        else:
+            self._speed_up_coef = 1
 
     def get_score(self) -> int:
         return self._length - 3
@@ -48,7 +55,9 @@ class Snake:
 
     def move(self) -> None:
         if time.time() - self._prev_time <= (
-            self._base_speed * (self._speed_up_coef ** self.get_score())
+            self._base_speed
+            * (self._speed_up_coef ** self.get_score())
+            / self._coffee_speed_up
         ):
             return None
 
