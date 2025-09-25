@@ -1,0 +1,19 @@
+[project]
+name = "terminake"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "nequamy",email = "nequamy@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10,<3.15"
+dependencies = [
+    "rich>=14.1.0,<15.0.0",
+    "pyinstaller>=6.15.0,<7.0.0"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
