@@ -19,7 +19,9 @@ class Snake:
 
         self.pos = [(x, y - i) for i in range(self._length)]
         self.grow = 0
+
         self._coffee_speed_up = 1
+        self._fun_coef = False
 
         self._base_speed = 0.2
         self._speed_up_coef = 0.95
@@ -34,8 +36,10 @@ class Snake:
         else:
             self._speed_up_coef = 1
 
-    def get_score(self) -> int:
-        return self._length - 3
+        if hasattr(food, "funny"):
+            self._fun_coef = True
+        else:
+            self._fun_coef = False
 
     def up(self) -> None:
         if self.direction != (0, 1):
@@ -71,15 +75,21 @@ class Snake:
         self.pos.insert(0, new_head)
 
         if self.grow > 0:
-            self.grow = 0
+            self.grow -= 1
         else:
             self.pos.pop()
             if self.grow < 0:
                 self.pos.pop()
-                self.grow = 0
+                self.grow += 1
 
     def get_head(self) -> Tuple[int]:
         return self.pos[0]
 
     def get_body(self) -> List[Tuple[int]]:
         return self.pos[1:]
+
+    def get_score(self) -> int:
+        return self._length - 3
+
+    def get_fun(self) -> int:
+        return self._fun_coef

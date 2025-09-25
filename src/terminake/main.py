@@ -8,6 +8,8 @@ from states import GameStatesEnum
 def main(stdscr) -> None:
     curses.echo(False)
     curses.curs_set(0)
+    curses.start_color()
+    curses.use_default_colors()
     stdscr.nodelay(True)
 
     max_y, max_x = stdscr.getmaxyx()

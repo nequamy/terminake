@@ -19,6 +19,10 @@ class GameState(BaseState):
     _curr_food: Optional[BaseFood] = None
     _collision = False
 
+    def __init__(self, context: GameContext):
+        super().__init__(context)
+        curses.init_pair(1, curses.COLOR_YELLOW, -1)
+
     def handle_input(self, key: int) -> Optional[GameStatesEnum]:
         if key == ord("p") or key == ("P"):
             return GameStatesEnum.PAUSE
@@ -98,11 +102,27 @@ class GameState(BaseState):
 
         head: str = self._head_oriented_chars[self.context.snake.direction]
         head_x, head_y = self.context.snake.get_head()
-        window.addstr(head_y, head_x, head, curses.A_BOLD)
+        window.addstr(
+            head_y,
+            head_x,
+            head,
+            (curses.A_BOLD)
+            if not self.context.snake.get_fun()
+            else (curses.color_pair(1) | curses.A_BOLD),
+        )
 
         body = self.context.snake.get_body()
+
         for i, coords in enumerate(body):
-            window.addstr(coords[1], coords[0], self._body_char, curses.A_BOLD)
+            if self.context.snake.get_fun():
+                window.addstr(
+                    coords[1],
+                    coords[0],
+                    self._body_char,
+                    curses.color_pair(1) | curses.A_BOLD,
+                )
+            else:
+                window.addstr(coords[1], coords[0], self._body_char, curses.A_BOLD)
 
         window.addstr(
             self._curr_food.pos[1], self._curr_food.pos[0], self._curr_food.ascii_art
